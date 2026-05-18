@@ -22,7 +22,7 @@ class PaymentService {
         const response = await axios_1.default.post(`${this.baseUrl}/payments`, {
             amount: {
                 value: amount.toFixed(2),
-                currency: 'RUB',
+                currency: 'BYN',
             },
             confirmation: {
                 type: 'redirect',

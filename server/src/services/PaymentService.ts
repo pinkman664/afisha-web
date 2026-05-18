@@ -34,7 +34,7 @@ export class PaymentService {
       {
         amount: {
           value: amount.toFixed(2),
-          currency: 'RUB',
+          currency: 'BYN',
         },
         confirmation: {
           type: 'redirect',
