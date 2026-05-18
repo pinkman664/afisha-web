@@ -8,7 +8,6 @@ import MovieDetail from './pages/MovieDetail';
 import Admin from './pages/Admin';
 import SeatSelection from './pages/SeatSelection';
 import Payment from './pages/Payment';
-import NotFound from './pages/NotFound';
 import { Layout } from './components/Layout';
 import { ModalProvider } from './context/ModalContext';
 
@@ -31,7 +30,6 @@ function App() {
           <Route path="/admin" element={<Layout><Admin /></Layout>} />
           <Route path="/session/:sessionId/seats" element={<Layout><SeatSelection /></Layout>} />
           <Route path="/payment/:ticketId" element={<Layout><Payment /></Layout>} />
-          <Route path="*\" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
     </ModalProvider>
