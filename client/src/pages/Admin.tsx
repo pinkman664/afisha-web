@@ -158,6 +158,10 @@ export default function Admin() {
     if (!hallForm.hallName.trim()) errors.hallName = 'Укажите название зала';
     if (!hallForm.rows || Number(hallForm.rows) <= 0) errors.hallRows = 'Ряды должны быть > 0';
     if (!hallForm.cols || Number(hallForm.cols) <= 0) errors.hallCols = 'Места должны быть > 0';
+    
+    // Add validation limits
+    if (hallForm.rows && Number(hallForm.rows) > 14) errors.hallRows = 'Максимум 14 рядов';
+if (hallForm.cols && Number(hallForm.cols) > 14) errors.hallCols = 'Максимум 14 мест в ряду';
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -459,12 +463,12 @@ export default function Admin() {
                     {fieldErrors.hallName && <p style={{ color: 'var(--primary)', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600 }}>{fieldErrors.hallName}</p>}
                   </Field>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                    <Field label="Ряды">
-                      <input type="number" className="input-field" value={hallForm.rows} onChange={e => { setHallForm({ ...hallForm, rows: Number(e.target.value) }); setFieldErrors(p => ({ ...p, hallRows: '' })); }} />
+                    <Field label="Ряды (макс. 14)">
+  <input type="number" className="input-field" min="1" max="14" value={hallForm.rows} onChange={e => { setHallForm({ ...hallForm, rows: Number(e.target.value) }); setFieldErrors(p => ({ ...p, hallRows: '' })); }} />
                       {fieldErrors.hallRows && <p style={{ color: 'var(--primary)', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600 }}>{fieldErrors.hallRows}</p>}
                     </Field>
-                    <Field label="Места">
-                      <input type="number" className="input-field" value={hallForm.cols} onChange={e => { setHallForm({ ...hallForm, cols: Number(e.target.value) }); setFieldErrors(p => ({ ...p, hallCols: '' })); }} />
+                    <Field label="Места (макс. 14)">
+  <input type="number" className="input-field" min="1" max="14" value={hallForm.cols} onChange={e => { setHallForm({ ...hallForm, cols: Number(e.target.value) }); setFieldErrors(p => ({ ...p, hallCols: '' })); }} />
                       {fieldErrors.hallCols && <p style={{ color: 'var(--primary)', fontSize: '0.75rem', marginTop: '4px', fontWeight: 600 }}>{fieldErrors.hallCols}</p>}
                     </Field>
                   </div>
@@ -507,8 +511,8 @@ export default function Admin() {
               )}
             </div>
           </div>
-          <div className="glass card" style={{ padding: '0' }}>
-            {cinemas.map(c => (
+          <div className="glass card" style={{ padding: '0', maxHeight: '80vh', overflowY: 'auto' }}>
+          {cinemas.map(c => (
               <div key={c.cinemaId} style={{ padding: '20px', borderBottom: '1px solid var(--glass-border)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>

@@ -80,7 +80,7 @@ export default function Profile() {
       });
       
       setUser(prev => ({ ...prev!, login: res.data.login || newLogin }));
-      setAvatarError(false); // Reset error to try reloading new avatar
+      setAvatarError(false); 
       setEditMsg('✅ Обновлено');
       setEditMode(false);
       setAvatarFile(null);

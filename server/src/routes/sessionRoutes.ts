@@ -6,12 +6,10 @@ import { adminMiddleware } from '../middlewares/adminMiddleware';
 const router = Router();
 const sc = new SessionController();
 
-// Открытые
 router.get('/movie/:movieId', sc.getByMovie);
 router.get('/:id', sc.getOne);
 router.get('/', sc.getAll);
 
-// Только для Админа
 router.post('/', authMiddleware, adminMiddleware, sc.create);
 router.put('/:id', authMiddleware, adminMiddleware, sc.update);
 router.delete('/:id', authMiddleware, adminMiddleware, sc.remove);

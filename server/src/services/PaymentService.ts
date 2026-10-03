@@ -25,8 +25,6 @@ export class PaymentService {
     amount: number,
     returnUrl: string
   ): Promise<CreatePaymentResult> {
-    console.log('SHOP_ID:', this.shopId);
-    console.log('SECRET_KEY:', this.secretKey ? 'есть' : 'НЕТ');
     const idempotenceKey = uuidv4();
 
     const response = await axios.post(
@@ -34,14 +32,15 @@ export class PaymentService {
       {
         amount: {
           value: amount.toFixed(2),
-          currency: 'BYN',
+          currency: 'RUB',
         },
         confirmation: {
           type: 'redirect',
           return_url: returnUrl,
         },
         capture: true,
-        description: `Билет #${ticketId}`,
+        
+        description: `Оплата билета #${ticketId} | Сумма: ${amount.toFixed(2)} BYN`,
         metadata: { ticketId },
       },
       {
@@ -64,7 +63,7 @@ export class PaymentService {
 
     return {
       paymentId: response.data.id,
-      status: response.data.status, // 'pending' | 'succeeded' | 'canceled'
+      status: response.data.status,
     };
   }
 }

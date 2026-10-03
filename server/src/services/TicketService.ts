@@ -14,7 +14,6 @@ export class TicketService {
   private seatRepo = AppDataSource.getRepository(Seat);
   private userRepo = AppDataSource.getRepository(User);
 
-  // ── Бронирование мест ──────────────────────────
   async reserveSeats(userId: number, sessionId: number, seatIds: number[]) {
     const session = await this.sessionRepo.findOne({
       where: { sessionId },
@@ -66,7 +65,6 @@ export class TicketService {
     }));
   }
 
-  // ── Шаг 1: создать платёж в ЮKassa ─────────────
   async initiatePaymentMultiple(ticketIds: number[], userId: number) {
     if (!ticketIds.length) throw new Error('Нет билетов для оплаты');
     
@@ -94,12 +92,11 @@ export class TicketService {
     const returnUrl = `${process.env.FRONTEND_URL}/payment/${ticketIds.join(',')}?status=return`;
 
     const { paymentId, confirmationUrl } = await paymentService.createPayment(
-      ticketIds[0], // Используем первый ID как идентификатор для ЮKassa
+      ticketIds[0], 
       totalAmount,
       returnUrl
     );
 
-    // Сохраняем paymentId во всех билетах заказа
     for (const ticket of ticketsToPay) {
       ticket.paymentId = paymentId;
       await this.ticketRepo.save(ticket);
@@ -108,7 +105,6 @@ export class TicketService {
     return { confirmationUrl };
   }
 
-  // ── Шаг 2: проверить статус после редиректа ─────
   async confirmPaymentMultiple(ticketIds: number[], userId: number) {
     if (!ticketIds.length) throw new Error('Нет билетов');
 
@@ -153,7 +149,6 @@ export class TicketService {
     return { status: 'pending' };
   }
 
-  // ── Статус бронирования ─────────────────────────
   async getTicketStatus(ticketId: number, userId: number) {
     const ticket = await this.ticketRepo.findOne({
       where: { ticketId, user: { userId } },
@@ -169,7 +164,6 @@ export class TicketService {
     return ticket;
   }
 
-  // ── Билеты пользователя (только paid) ──────────
   async getUserTickets(userId: number) {
     return await this.ticketRepo.find({
       where: { user: { userId }, status: 'paid' },
@@ -177,7 +171,6 @@ export class TicketService {
     });
   }
 
-  // ── Отмена билета / брони ───────────────────────
   async cancelTicket(ticketId: number, userId: number) {
     const ticket = await this.ticketRepo.findOne({
       where: { ticketId, user: { userId } },
@@ -194,7 +187,6 @@ export class TicketService {
     }
   }
 
-  // ── Очистка просроченных броней ─────────────────
   async cleanExpiredReservations() {
     const expired = await this.ticketRepo
       .createQueryBuilder('t')
@@ -210,7 +202,6 @@ export class TicketService {
     return expired.length;
   }
 
-  // ── Статистика (админка) ────────────────────────
   async getStatistics() {
     const totals = await this.ticketRepo
       .createQueryBuilder('t')

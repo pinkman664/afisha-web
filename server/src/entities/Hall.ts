@@ -24,7 +24,10 @@ export class Hall {
   hallName!: string;
 
   @Column({ type: 'number', precision: 5, scale: 0, nullable: true })
-  capacity!: number; 
+  capacity!: number;
+
+  @Column({ type: 'number', precision: 10, scale: 2, default: 0, nullable: true })
+  vipPriceMarkup!: number;
 
   @OneToMany(() => Seat, (seat) => seat.hall, { cascade: true })
   seats!: Seat[];

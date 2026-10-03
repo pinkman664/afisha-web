@@ -10,7 +10,6 @@ import fs from 'fs';
 const router = Router();
 const mc = new MovieController();
 
-// Настройка Multer для сохранения на диск
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = file.fieldname === 'coverImage' ? 'uploads/posters' : 'uploads/trailers';
@@ -25,25 +24,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 100 * 1024 * 1024 }, // 100 MB (трейлеры)
+  limits: { fileSize: 100 * 1024 * 1024 }, 
 });
 
-/**
- * ПУБЛИЧНЫЕ РОУТЫ
- */
-// Получение всех фильмов
 router.get('/', mc.getAll);
-// Получение одного фильма по ID
 router.get('/:id', mc.getOne);
-// Стриминг трейлера фильма
 router.get('/:id/trailer', mc.getTrailer);
-// Получение обложки фильма
 router.get('/:id/poster', mc.getPoster);
 
-/**
- * АДМИН-РОУТЫ (требуют токен и права администратора)
- */
-// Создание фильма с загрузкой файлов
 router.post('/', 
   authMiddleware, 
   adminMiddleware, 
@@ -51,7 +39,6 @@ router.post('/',
   mc.create
 );
 
-// Обновление фильма
 router.put('/:id', 
   authMiddleware, 
   adminMiddleware, 
@@ -59,7 +46,6 @@ router.put('/:id',
   mc.update
 );
 
-// Удаление фильма
 router.delete('/:id', authMiddleware, adminMiddleware, mc.delete);
 
 export default router;

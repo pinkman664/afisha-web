@@ -25,7 +25,7 @@ export class TicketController {
       const ticketIds = req.body.ticketIds;
       if (!ticketIds || !Array.isArray(ticketIds)) return res.status(400).json({ message: 'ticketIds array required' });
       const result = await ticketService.initiatePaymentMultiple(ticketIds, userId);
-      res.json(result); // { confirmationUrl }
+      res.json(result); 
     } catch (e: any) {
       res.status(400).json({ message: e.message });
     }

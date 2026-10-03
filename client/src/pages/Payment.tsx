@@ -116,7 +116,7 @@ export default function Payment() {
     try {
       const ticketIdsArray = ticketId?.split(',').map(Number) || [];
       const res = await apiClient.post(`/tickets/initiate-multiple`, { ticketIds: ticketIdsArray });
-      redirectingToPayment.current = true; // ← говорим что уходим на оплату
+      redirectingToPayment.current = true;
       window.location.href = res.data.confirmationUrl;
     } catch (e: any) {
       setError(e.response?.data?.message || 'Ошибка при создании платежа');

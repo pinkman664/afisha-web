@@ -1,1 +1,84 @@
+# Environment files - NEVER commit secrets!
+*.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+build/
+client/dist/
+server/dist/
+.server/dist/
+out/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data and uploads
 server/uploads/
+
+# SSL certificates - private keys should NEVER be committed
+nginx/ssl/*.key
+*.key
+*.pem
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+._*
+.DS_Store?
+.Spotlight-V100
+.Trashes
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# JMeter test results
+*.jtl
+*.csv
+
+# TypeScript cache
+.tscache/
+
+# Package manager specific
+pnpm-lock.yaml
+yarn.lock
+
+# Docker (optional)
+docker-compose.override.yml
+
+# Project specific exclusions
+jmeter/results/
+server/jmeter/results/

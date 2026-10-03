@@ -15,7 +15,7 @@ function App() {
   return (
     <ModalProvider>
       <BrowserRouter>
-        {/* Глобальный фон */}
+        
         <div className="bg-blobs">
           <div className="blob"></div>
           <div className="blob blob--2"></div>

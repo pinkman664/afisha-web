@@ -6,9 +6,9 @@ import { adminMiddleware } from '../middlewares/adminMiddleware';
 const router = Router();
 const gc = new GenreController();
 
-router.get('/', gc.getAll);                                          // Все могут видеть жанры
-router.post('/', authMiddleware, adminMiddleware, gc.create);        // Только Администратор
-router.put('/:id', authMiddleware, adminMiddleware, gc.update);      // Только Администратор
-router.delete('/:id', authMiddleware, adminMiddleware, gc.remove);   // Только Администратор
+router.get('/', gc.getAll);                                          
+router.post('/', authMiddleware, adminMiddleware, gc.create);        
+router.put('/:id', authMiddleware, adminMiddleware, gc.update);     
+router.delete('/:id', authMiddleware, adminMiddleware, gc.remove);   
 
 export default router;

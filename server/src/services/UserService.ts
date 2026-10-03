@@ -83,7 +83,7 @@ export class UserService {
         return userResponse as User;
     }
 
-    // === Методы для Администратора ===
+  
 
     // Получить список всех пользователей (только для Администратора)
     async getAllUsers(): Promise<User[]> {
